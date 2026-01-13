@@ -98,11 +98,12 @@ const getSite = (config: Config) => {
 };
 
 const getMetadata = (config: Config) => {
-  const siteConfig = getSite(config);
+  // const siteConfig = getSite(config);
 
   const _default = {
     title: {
-      default: siteConfig?.name || DEFAULT_SITE_NAME,
+      // default: siteConfig?.name || DEFAULT_SITE_NAME,
+      default: 'Nuôi Ý Tưởng - Resume',
       template: '%s',
     },
     description: '',
@@ -115,7 +116,15 @@ const getMetadata = (config: Config) => {
     },
   };
 
-  return merge({}, _default, config?.metadata ?? {}) as MetaDataConfig;
+  // return merge({}, _default, config?.metadata ?? {}) as MetaDataConfig;
+   const merged = merge({}, _default, config?.metadata ?? {}) as MetaDataConfig;
+  
+  // Force the title to always be 'Nuôi Ý Tưởng - Resume'
+  if (merged.title) {
+    merged.title.default = 'Nuôi Ý Tưởng - Resume';
+  }
+  
+  return merged;
 };
 
 const getI18N = (config: Config) => {

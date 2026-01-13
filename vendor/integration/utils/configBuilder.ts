@@ -122,6 +122,7 @@ const getMetadata = (config: Config) => {
   // Force the title to always be 'Nuôi Ý Tưởng - Resume'
   if (merged.title) {
     merged.title.default = 'Nuôi Ý Tưởng - Resume';
+    merged.title.template = '%s';
   }
   
   return merged;

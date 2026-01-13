@@ -1,6 +1,7 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "framework": "astro",
   "headers": [
     {
       "source": "/_astro/(.*)",

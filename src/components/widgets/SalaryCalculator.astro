@@ -1,0 +1,312 @@
+---
+interface Props {
+  title?: string;
+}
+
+const { title = 'Vietnam Salary Calculator' } = Astro.props;
+---
+
+<div class="mx-auto max-w-2xl rounded-lg bg-white p-8 shadow-lg dark:bg-slate-900">
+  <h2 class="mb-6 text-3xl font-bold text-slate-900 dark:text-white">{title}</h2>
+
+  <!-- Tab Buttons -->
+  <div class="mb-6 flex gap-2">
+    <button
+      id="grossToNetTab"
+      class="tab-button active rounded-lg bg-blue-600 px-6 py-2 font-semibold text-white transition-all hover:bg-blue-700"
+      data-tab="grossToNet"
+    >
+      Gross to Net
+    </button>
+    <button
+      id="netToGrossTab"
+      class="tab-button rounded-lg bg-slate-200 px-6 py-2 font-semibold text-slate-900 transition-all hover:bg-slate-300 dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
+      data-tab="netToGross"
+    >
+      Net to Gross
+    </button>
+  </div>
+
+  <!-- Gross to Net Form -->
+  <div id="grossToNet" class="tab-content">
+    <form id="grossToNetForm" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"> Gross Salary (VND) </label>
+        <input
+          type="number"
+          id="grossSalary"
+          placeholder="Enter gross salary"
+          class="mt-2 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-slate-600 dark:bg-slate-800 dark:text-white dark:placeholder-slate-500"
+          required
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="w-full rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white transition-all hover:bg-blue-700 active:scale-95"
+      >
+        Calculate
+      </button>
+    </form>
+
+    <!-- Gross to Net Result -->
+    <div id="grossToNetResult" class="mt-6 hidden">
+      <div class="rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20">
+        <h3 class="mb-4 text-lg font-semibold text-slate-900 dark:text-white">Results</h3>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div class="rounded-lg bg-white p-3 dark:bg-slate-800">
+            <p class="text-sm text-slate-600 dark:text-slate-400">Gross Salary</p>
+            <p id="resultGrossSalary" class="text-xl font-bold text-slate-900 dark:text-white">0 VND</p>
+          </div>
+
+          <div class="rounded-lg bg-white p-3 dark:bg-slate-800">
+            <p class="text-sm text-slate-600 dark:text-slate-400">Net Salary</p>
+            <p id="resultNetSalary" class="text-xl font-bold text-green-600 dark:text-green-400">0 VND</p>
+          </div>
+        </div>
+
+        <div class="mt-4 space-y-2 rounded-lg bg-white p-3 dark:bg-slate-800">
+          <div class="flex justify-between">
+            <span class="text-sm text-slate-600 dark:text-slate-400">Personal Income Tax</span>
+            <span id="resultPIT" class="font-semibold text-slate-900 dark:text-white">0 VND</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-slate-600 dark:text-slate-400">Social Insurance (8%)</span>
+            <span id="resultSI" class="font-semibold text-slate-900 dark:text-white">0 VND</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-slate-600 dark:text-slate-400">Health Insurance (1.5%)</span>
+            <span id="resultHI" class="font-semibold text-slate-900 dark:text-white">0 VND</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-slate-600 dark:text-slate-400">Unemployment Insurance (0.5%)</span>
+            <span id="resultUI" class="font-semibold text-slate-900 dark:text-white">0 VND</span>
+          </div>
+          <div class="border-t border-slate-200 pt-2 dark:border-slate-700">
+            <div class="flex justify-between">
+              <span class="font-semibold text-slate-900 dark:text-white">Total Deductions</span>
+              <span id="resultTotalDeductions" class="font-bold text-red-600 dark:text-red-400"> 0 VND </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Net to Gross Form -->
+  <div id="netToGross" class="tab-content hidden">
+    <form id="netToGrossForm" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"> Net Salary (VND) </label>
+        <input
+          type="number"
+          id="netSalary"
+          placeholder="Enter net salary"
+          class="mt-2 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-slate-600 dark:bg-slate-800 dark:text-white dark:placeholder-slate-500"
+          required
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="w-full rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white transition-all hover:bg-blue-700 active:scale-95"
+      >
+        Calculate
+      </button>
+    </form>
+
+    <!-- Net to Gross Result -->
+    <div id="netToGrossResult" class="mt-6 hidden">
+      <div class="rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20">
+        <h3 class="mb-4 text-lg font-semibold text-slate-900 dark:text-white">Results</h3>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div class="rounded-lg bg-white p-3 dark:bg-slate-800">
+            <p class="text-sm text-slate-600 dark:text-slate-400">Net Salary</p>
+            <p id="resultNetSalaryN2G" class="text-xl font-bold text-slate-900 dark:text-white">0 VND</p>
+          </div>
+
+          <div class="rounded-lg bg-white p-3 dark:bg-slate-800">
+            <p class="text-sm text-slate-600 dark:text-slate-400">Estimated Gross Salary</p>
+            <p id="resultEstimatedGross" class="text-xl font-bold text-green-600 dark:text-green-400">0 VND</p>
+          </div>
+        </div>
+
+        <div class="mt-4 rounded-lg bg-white p-3 dark:bg-slate-800">
+          <p class="text-xs text-slate-500 dark:text-slate-400">
+            ⓘ This is an estimate. Actual gross may vary slightly due to rounding and specific tax deductions.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading & Error States -->
+  <div id="loading" class="mt-6 hidden text-center">
+    <div
+      class="inline-block h-6 w-6 animate-spin rounded-full border-4 border-slate-200 border-t-blue-600 dark:border-slate-700 dark:border-t-blue-400"
+    >
+    </div>
+    <p class="mt-2 text-slate-600 dark:text-slate-400">Calculating...</p>
+  </div>
+
+  <div id="error" class="mt-6 hidden">
+    <div class="rounded-lg bg-red-50 p-4 dark:bg-red-900/20">
+      <p id="errorMessage" class="text-red-600 dark:text-red-400">An error occurred</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function formatCurrency(value: number): string {
+    return new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value);
+  }
+
+  // Tab switching
+  const tabButtons = document.querySelectorAll('.tab-button');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const tabName = button.getAttribute('data-tab');
+
+      // Remove active state from all
+      tabButtons.forEach((btn) => {
+        btn.classList.remove('bg-blue-600', 'text-white', 'hover:bg-blue-700');
+        btn.classList.add(
+          'bg-slate-200',
+          'text-slate-900',
+          'hover:bg-slate-300',
+          'dark:bg-slate-700',
+          'dark:text-white',
+          'dark:hover:bg-slate-600'
+        );
+      });
+
+      // Add active state to clicked
+      button.classList.add('bg-blue-600', 'text-white', 'hover:bg-blue-700');
+      button.classList.remove(
+        'bg-slate-200',
+        'text-slate-900',
+        'hover:bg-slate-300',
+        'dark:bg-slate-700',
+        'dark:text-white',
+        'dark:hover:bg-slate-600'
+      );
+
+      // Hide all tabs
+      tabContents.forEach((content) => content.classList.add('hidden'));
+
+      // Show active tab
+      const activeTab = document.getElementById(tabName || '');
+      if (activeTab) activeTab.classList.remove('hidden');
+    });
+  });
+
+  // Gross to Net Form Handler
+  const grossToNetForm = document.getElementById('grossToNetForm') as HTMLFormElement;
+  grossToNetForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const grossSalary = parseFloat((document.getElementById('grossSalary') as HTMLInputElement).value);
+
+    if (!grossSalary || grossSalary <= 0) {
+      showError('Please enter a valid gross salary');
+      return;
+    }
+
+    showLoading();
+
+    try {
+      const response = await fetch('/api/salary/gross-to-net', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ grossSalary }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        document.getElementById('resultGrossSalary')!.textContent = formatCurrency(data.grossSalary);
+        document.getElementById('resultNetSalary')!.textContent = formatCurrency(data.netSalary);
+        document.getElementById('resultPIT')!.textContent = formatCurrency(data.breakdown.personalIncomeTax);
+        document.getElementById('resultSI')!.textContent = formatCurrency(data.breakdown.socialInsurance);
+        document.getElementById('resultHI')!.textContent = formatCurrency(data.breakdown.healthInsurance);
+        document.getElementById('resultUI')!.textContent = formatCurrency(data.breakdown.unemploymentInsurance);
+        document.getElementById('resultTotalDeductions')!.textContent = formatCurrency(data.totalDeductions);
+
+        document.getElementById('grossToNetResult')!.classList.remove('hidden');
+        document.getElementById('error')!.classList.add('hidden');
+      } else {
+        showError(data.error || 'Calculation failed');
+      }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
+      showError('Failed to calculate salary. Please try again.');
+    } finally {
+      hideLoading();
+    }
+  });
+
+  // Net to Gross Form Handler
+  const netToGrossForm = document.getElementById('netToGrossForm') as HTMLFormElement;
+  netToGrossForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const netSalary = parseFloat((document.getElementById('netSalary') as HTMLInputElement).value);
+
+    if (!netSalary || netSalary <= 0) {
+      showError('Please enter a valid net salary');
+      return;
+    }
+
+    showLoading();
+
+    try {
+      const response = await fetch('/api/salary/net-to-gross', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ netSalary }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        document.getElementById('resultNetSalaryN2G')!.textContent = formatCurrency(data.netSalary);
+        document.getElementById('resultEstimatedGross')!.textContent = formatCurrency(data.estimatedGross);
+
+        document.getElementById('netToGrossResult')!.classList.remove('hidden');
+        document.getElementById('error')!.classList.add('hidden');
+      } else {
+        showError(data.error || 'Calculation failed');
+      }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
+      showError('Failed to calculate salary. Please try again.');
+    } finally {
+      hideLoading();
+    }
+  });
+
+  function showLoading() {
+    document.getElementById('loading')!.classList.remove('hidden');
+    document.getElementById('error')!.classList.add('hidden');
+  }
+
+  function hideLoading() {
+    document.getElementById('loading')!.classList.add('hidden');
+  }
+
+  function showError(message: string) {
+    const errorDiv = document.getElementById('error')!;
+    const errorMessage = document.getElementById('errorMessage')!;
+    errorMessage.textContent = message;
+    errorDiv.classList.remove('hidden');
+  }
+</script>
